@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import * as assets from "../../../assets";
 import apps from "../.././../assets/images/d-app-store.jpg";
 import play from "../.././../assets/images/d-play-store.jpg";
-import { Footer } from "./Footer";
+import Footer from "./Footer";
 
 function Login() {
   const [isLogin, setIsLogin] = useState(true);
