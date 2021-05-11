@@ -4,7 +4,7 @@ import * as assets from "../../assets";
 
 function ProfileHolder(props) {
   return (
-    <div className="flex justify-between  mb-2 w-72 mx-auto  items-center py-2">
+    <div className="flex justify-between  mb-1 w-72 mx-auto  items-center py-2">
       <div className="flex items-center">
         <div className="mx-2 ">
           <Avatar
