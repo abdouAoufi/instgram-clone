@@ -3,6 +3,7 @@ import * as assets from "../../assets";
 import Avatar from "../Avatar/Avatar";
 import SearchIcon from "@material-ui/icons/Search";
 import NotificationContext from "../../notification-context";
+import Option from "../Option/Option";
 
 const Navbar = (props) => {
   const mr = "mx-3";
@@ -15,7 +16,7 @@ const Navbar = (props) => {
   return (
     <div>
       {/* {heder} */}
-      <div className=" fixed top-0 z-50 w-full overflow-hidden box-border px-4 flex justify-between items-center py-3 border border-gray-200 bg-white lg:px-32">
+      <div className=" fixed top-0 z-50 mb-12 h-16 w-full overflow-hidden box-border px-4 flex justify-between items-center py-3 border border-gray-200 bg-white lg:px-32">
         <div className=" flex-1">
           <a href="/">
             <img src={assets.logo} alt="logo" />
@@ -27,7 +28,10 @@ const Navbar = (props) => {
               !searchIconMove ? "pl-36" : "lg:pl-2 pl-6"
             }`}
           >
-            <SearchIcon style={{ fontSize: 17 , cursor : "pointer"}} color="disabled" />
+            <SearchIcon
+              style={{ fontSize: 17, cursor: "pointer" }}
+              color="disabled"
+            />
             <input
               onClick={moveSearchIcon}
               type="text"
@@ -37,7 +41,7 @@ const Navbar = (props) => {
           </div>
         </div>
         {/* // ! Home */}
-        <div className="flex items-center   ">
+        <div className="flex items-center relative  ">
           <div className={`${mr} hidden lg:block cursor-pointer`}>
             <svg
               aria-label="Home"
@@ -68,7 +72,6 @@ const Navbar = (props) => {
             </svg>
           </div>
           {/* // ! Find People  */}
-
           <div
             onClick={() =>
               props.showNotification(
@@ -109,9 +112,9 @@ const Navbar = (props) => {
             </svg>
           </div>
 
-          <a className={`${mr}  `} href="/profile">
+          <div onClick={props.showOptioin} className={`${mr}  cursor-pointer `} href="/profile">
             <Avatar type={"small"} imgUrl={assets.profilePic} />
-          </a>
+          </div>
         </div>
       </div>
     </div>

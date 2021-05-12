@@ -6,10 +6,10 @@ import Footer from "../../containers/Auth/Login/Footer";
 function Seggestion(props) {
   return (
     <div>
-      <p className="font-bold text-sm text-gray-400 mb-4 ">
+      <p className="font-bold text-sm text-gray-400 mb-2 ">
         Suggestions For You
       </p>
-      <div className="mb-12 h-48  ">
+      <div className="">
         {props.data?.slice(0, 4).map((person) => (
           <ProfileHolder
             key={person.id}
@@ -21,10 +21,9 @@ function Seggestion(props) {
         ))}
       </div>
 
-      <Footer />
-
       {/* Language copyRight */}
-      <div className=" mb-12">
+      <div className="mx-2 mt-4">
+        <Footer type={true} />
         <a className="text-xs mr-4 text-gray-600" href="/">
           English
         </a>

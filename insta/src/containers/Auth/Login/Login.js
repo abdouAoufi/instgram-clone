@@ -86,7 +86,8 @@ function Login() {
                     message: "Minimum length for email is 5  ",
                   },
                   pattern: {
-                    value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
+                    value:
+                      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
                     message: "It looks non valid email",
                   },
                 })}
@@ -236,9 +237,11 @@ function Login() {
           />
         </a>
       </div>
+      <div>
+        <Footer />
+      </div>
 
       {/* links */}
-      <Footer />
 
       {/* Language copyRight */}
       <div className="flex justify-center mb-12">

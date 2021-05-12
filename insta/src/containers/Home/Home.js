@@ -7,16 +7,23 @@ import "./Home.css";
 import Post from "../../components/Post/Post";
 import ProfileHolder from "../../components/ProfileHolder/ProfileHolder";
 import Seggestion from "../../components/Seggestion/Seggestion";
-import Footer from "../Auth/Login/Footer";
 import NotificationContext from "../../notification-context";
 import Alert from "../../components/Alerts/Alert";
+import CostumModal from "../../components/Modal/Modal";
+import Loading from "../../components/Loading/Loading";
+import Option from "../../components/Option/Option";
 
 const api = createApi({
   accessKey: "XIMULt5ue5Ps6Tm7TkKY1YGan2Bj_4K4ybUCE4f3mOE",
 });
-
 // CREATE ARRAY LIST HOLDS OBJECTS {description , created_at , urls}
 const Home = () => {
+  const [titleModalText, seTitleModalText] = useState("welcome");
+  const [insideModalText, setInsideleModalText] = useState(assets.textWelcome);
+  const [btnModalText, setBtnModalText] = useState("Okey thanks");
+  const [open, setOpen] = useState(true);
+  const [openOption, setOpenOption] = useState(false);
+  const [loadingData, setLoadingData] = useState(true);
   const [data, setPhotosResponse] = useState(null);
   const [notifTxt, setNotifTxt] = useState("Error something went wrong !");
   const notification = useContext(NotificationContext);
@@ -44,6 +51,7 @@ const Home = () => {
           };
           finalData.push(tempData);
         });
+        setLoadingData(false);
         setPhotosResponse(finalData);
       })
       .catch(() => {});
@@ -54,59 +62,113 @@ const Home = () => {
     notification.displayNotification();
   };
 
+  const clickOpenOption = () => {
+    setOpenOption(!openOption);
+  };
+
+  const logOutHndler = () => {
+    displayModal("Log out" , "You have to sign in again !" , "Okey")
+  };
+
+  const displayModal = (title, text, btnText) => {
+    setOpen(true);
+    seTitleModalText(title);
+    setInsideleModalText(text);
+    setBtnModalText(btnText);
+  };
+
   return (
-    <div className="relative">
+    <div>
+      {openOption ? (
+        <div
+          onClick={() => {
+            if (openOption) {
+              setOpenOption(false);
+            }
+          }}
+          className="fixed z-50 top-0   right-0 border border-2-black w-full h-full lg:px-32 "
+        >
+          {" "}
+          {openOption ? <Option click={logOutHndler}/> : null}
+        </div>
+      ) : null}
+      <CostumModal
+        open={open}
+        setOpen={() => setOpen(!open)}
+        textInside={insideModalText}
+        title={titleModalText}
+        btnText={btnModalText}
+      />
       {notification.status ? <Alert text={notifTxt} /> : null}
+      <Navbar
+        showOptioin={clickOpenOption}
+        showNotification={displayNotification}
+      />
 
-      <Navbar showNotification={displayNotification} />
       {/* stories */}
-      <section className="block lg:flex lg:justify-between lg:px-32">
-        {/* // ! FIRST BIG PARRENT  */}
-        <div className="w-full lg:w-150 mt-20">
-          {/* stories */}
-          <div onClick={displayNotification.bind(this , "Stories not aviable now !")} className=" w-full flex  py-4 px-2 flex-nowrap mt-1 mb-1 border  border rounded bg-white story-container ">
-            {data?.map((persone) => (
-              <StoryHolder
-                key={persone.id}
-                name={persone.firstName}
-                image={persone.profilePic}
-              /> 
-            ))}
-          </div>
-          {/* feeds */}
-          {data?.map((persone) => {
-            // console.log(persone.description);
-            return (
-              <Post
-                likes={persone.totalLikes}
-                profileImg={persone.profilePic}
-                key={persone.id}
-                userName={persone.firstName}
-                imageUrl={persone.fullImage}
-                caption={persone.descreption}
-              />
-            );
-          })}
-        </div>
-        {/* // ! SECOND BIG PARENT */}
+      <main>
+        <section
+          onClick={(e) => e.stopPropagation()}
+          className="block lg:flex lg:justify-between lg:px-32"
+        >
+          {/* // ! FIRST BIG PARRENT  */}
+          <div className="w-full lg:w-150 mt-20">
+            {/* stories */}
+            {loadingData ? (
+              <Loading />
+            ) : (
+              <div
+                onClick={displayNotification.bind(
+                  this,
+                  "Stories not aviable now !"
+                )}
+                className=" w-full flex  py-4 px-2 flex-nowrap mt-1 mb-1 border  border rounded bg-white story-container "
+              >
+                {data?.map((persone) => (
+                  <StoryHolder
+                    key={persone.id}
+                    name={persone.firstName}
+                    image={persone.profilePic}
+                  />
+                ))}
+              </div>
+            )}
 
-        <div className=" hidden w-80 mx-8  pt-8  px-2  lg:block mt-16  ">
-          <div className="relative">
-            {/* side bar information */}
-            {/* Profile insperctor */}
-            <div className="fixed">
-              <ProfileHolder
-                name="Aoufi abderahmanee"
-                userName="Abd__ou"
-                image={assets.profilePic}
-              />
-              <Seggestion data={data} />
+            {/* feeds */}
+            {data?.map((persone) => {
+              // console.log(persone.description);
+              return (
+                <Post
+                  likes={persone.totalLikes}
+                  profileImg={persone.profilePic}
+                  key={persone.id}
+                  userName={persone.firstName}
+                  imageUrl={persone.fullImage}
+                  caption={persone.descreption}
+                />
+              );
+            })}
+          </div>
+          {/* // ! SECOND BIG PARENT */}
+
+          <div className=" hidden w-80 mx-8  pt-8  px-2  lg:block mt-16  ">
+            <div className="relative">
+              {/* side bar information */}
+              {/* Profile insperctor */}
+              <div className="fixed">
+                <ProfileHolder
+                  name="Aoufi abderahmanee"
+                  userName="Abd__ou"
+                  image={assets.profilePic}
+                />
+                <Seggestion data={data} />
+              </div>
+
+              {/* suggestion */}
             </div>
-
-            {/* suggestion */}
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
       {/* maincontainer */}
     </div>
   );

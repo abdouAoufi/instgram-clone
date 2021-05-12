@@ -14,10 +14,10 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
   };
   return (
     <div className=" h-auto bg-white  m-auto border border-gray-300 my-8 rounded mb-8">
-      <div className=" flex justify-between items-center py-2 px-2  hover:underline">
+      <div className=" flex justify-between items-center py-2 px-2  ">
         <div className="flex justify-between items-center">
           <Avatar className="mr-3" src={profileImg} alt="Maissa" />
-          <a href="/" className="font-semibold">
+          <a href="/" className="font-semibold inline-block hover:underline">
             {userName}
           </a>
         </div>
@@ -132,7 +132,7 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
         {/* view comments  */}
         <div className=" mb-1 font-bold text-gray-400 text-sm">
           {" "}
-          <a href="/">view all comments</a>{" "}
+          <a href="/">view all {Math.floor(numOfLikes / 2)} comments</a>{" "}
         </div>
 
         {/* comments */}
