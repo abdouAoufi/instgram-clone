@@ -1,8 +1,7 @@
 import "./App.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import Login from "./containers/Auth/Login/Login";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Auth from "./containers/Auth/Auth/Auth";
 import Home from "./containers/Home/Home";
-import Alert from "./components/Alerts/Alert";
 import NotificationContext from "./notification-context";
 import React, { useState } from "react";
 
@@ -19,12 +18,12 @@ function App() {
         value={{
           status: showNotification,
           displayNotification: displayNotification,
-          
         }}
       >
-        
-          {/* <Login /> */}
-        <Home />
+        <Switch>
+          <Route path="/authentification" exact component={Auth}></Route>
+          <Route path="/" exact component={Home}></Route>
+        </Switch>
       </NotificationContext.Provider>
     </Router>
   );

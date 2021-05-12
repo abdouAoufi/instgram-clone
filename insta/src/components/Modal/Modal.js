@@ -29,14 +29,14 @@ function CostumModal(props) {
   return (
     <Modal open={props.open} onClose={() => props.setOpen(false)}>
       <div
-        className={`${classes.paper} max-w-65 max-h-59 outline-none border-0 rounded-xl lg:w-100 `}
+        className={`${classes.paper} w-65  min-h-59 outline-none border-0 rounded-xl lg:w-100 `}
         style={modalStyle}
       >
         <div className="flex justify-between flex-col mx-auto h-full">
-          <div className="text-base font-semibold text-gray-500 text-center   pb-y border-b py-3">
+          <div className="text-base font-semibold text-gray-500 text-center     border-b py-3">
             {props.title}
           </div>
-          <div className="text-sm font-normal text-gray-600  px-4  py-8 mt-3 ">
+          <div className="text-base font-normal text-gray-600  px-4   py-6  ">
             {" "}
             {props.textInside}
           </div>

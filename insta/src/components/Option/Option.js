@@ -2,7 +2,7 @@ import React from "react";
 
 function Option(props) {
   return (
-    <div className="bg-white mt-16 inline-block z-100 float-right   rounded shadow ">
+    <div className="bg-white mt-14 inline-block z-100 float-right   rounded shadow ">
       <ul>
         <li className="w-59 px-4 py-2 text-sm  flex items-center hover:bg-gray-100 cursor-pointer ">
           <svg

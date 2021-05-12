@@ -1,7 +1,7 @@
 import React from "react";
 import ProfileHolder from "../ProfileHolder/ProfileHolder";
 import * as assets from "../../assets";
-import Footer from "../../containers/Auth/Login/Footer";
+import Footer from "../../containers/Auth/Auth/Footer";
 
 function Seggestion(props) {
   return (

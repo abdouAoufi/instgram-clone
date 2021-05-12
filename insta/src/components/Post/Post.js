@@ -28,8 +28,7 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
       <div className="p-0 m-0 overflow-hidden relative">
         <img
           onDoubleClick={likeThePost}
-          sizes="614"
-          className=" select-none object-fit w-full h-full object-cover"
+          className=" select-none object-fit min w-full h-full object-cover"
           style={{ maxHeight: 650 }}
           src={imageUrl}
           alt=""
@@ -151,7 +150,7 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
         </div>
         {/* time holder */}
         <div className="  mt-2 mb-2 font-light text-gray-400 text-xs">
-          12 HOURS AGO
+          {Math.floor(Math.random() * 24 )} HOURS AGO 
         </div>
       </div>
       {/* comment section */}

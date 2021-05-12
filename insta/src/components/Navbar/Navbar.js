@@ -16,11 +16,11 @@ const Navbar = (props) => {
   return (
     <div>
       {/* {heder} */}
-      <div className=" fixed top-0 z-50 mb-12 h-16 w-full overflow-hidden box-border px-4 flex justify-between items-center py-3 border border-gray-200 bg-white lg:px-32">
+      <div className=" fixed top-0 z-50 mb-12 h-14 w-full overflow-hidden box-border px-4 flex justify-between items-center py-3 border border-gray-200 bg-white lg:px-32">
         <div className=" flex-1">
-          <a href="/">
+          <span onClick={props.refresh} className="cursor-pointer">
             <img src={assets.logo} alt="logo" />
-          </a>
+          </span>
         </div>
         <div className="hidden lg:flex-1 lg:block">
           <div

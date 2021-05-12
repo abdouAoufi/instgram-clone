@@ -12,51 +12,76 @@ import Alert from "../../components/Alerts/Alert";
 import CostumModal from "../../components/Modal/Modal";
 import Loading from "../../components/Loading/Loading";
 import Option from "../../components/Option/Option";
+import { auth } from "../../firebase";
 
 const api = createApi({
   accessKey: "XIMULt5ue5Ps6Tm7TkKY1YGan2Bj_4K4ybUCE4f3mOE",
 });
 // CREATE ARRAY LIST HOLDS OBJECTS {description , created_at , urls}
-const Home = () => {
+const Home = (props) => {
+  const [refrechHome, setRefrechHome] = useState(true);
+  const [userName, setUserName] = useState("");
+  const [userLogin, setUserLogin] = useState(false);
   const [titleModalText, seTitleModalText] = useState("welcome");
   const [insideModalText, setInsideleModalText] = useState(assets.textWelcome);
   const [btnModalText, setBtnModalText] = useState("Okey thanks");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [openOption, setOpenOption] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
   const [data, setPhotosResponse] = useState(null);
-  const [notifTxt, setNotifTxt] = useState("Error something went wrong !");
+  const [notifTxt, setNotifTxt] = useState("Welcome ...! ");
   const notification = useContext(NotificationContext);
   const randomIndex = Math.floor(Math.random() * assets.categories.length);
   const randomCategory = assets.categories[randomIndex];
+
   useEffect(() => {
-    api.search
-      .getPhotos({ query: randomCategory, orientation: "landscape" })
-      .then((result) => {
-        const dataRetrived = result.response.results;
-        let finalData = [];
-        dataRetrived.forEach((singleImage) => {
-          let tempData = {
-            id: singleImage.id,
-            descreption: singleImage.alt_description,
-            createAt: singleImage.created_at,
-            fullImage: singleImage.urls.regular,
-            smallImage: singleImage.urls.small,
-            userName: singleImage.user.instagram_username,
-            firstName: singleImage.user.first_name,
-            lastName: singleImage.user.last_name,
-            profilePic: singleImage.user.profile_image.large,
-            totalLikes: singleImage.user.total_likes,
-            comments: {},
-          };
-          finalData.push(tempData);
-        });
-        setLoadingData(false);
-        setPhotosResponse(finalData);
-      })
-      .catch(() => {});
+    auth.onAuthStateChanged(function (user) {
+      if (user) {
+        console.log(user);
+        setUserName(user.displayName);
+        setUserLogin(true);
+        setOpen(true);
+      } else {
+        console.log("USER IS LOGGED OUT");
+        logOutHndler();
+        setUserLogin(false);
+      }
+    });
   }, []);
 
+  useEffect(() => {
+    if (userLogin) {
+      api.search
+        .getPhotos({ query: randomCategory, orientation: "landscape" })
+        .then((result) => {
+          const dataRetrived = result.response.results;
+          let finalData = [];
+          dataRetrived.forEach((singleImage) => {
+            let tempData = {
+              id: singleImage.id,
+              descreption: singleImage.alt_description,
+              createAt: singleImage.created_at,
+              fullImage: singleImage.urls.regular,
+              smallImage: singleImage.urls.small,
+              userName: singleImage.user.instagram_username,
+              firstName: singleImage.user.first_name,
+              lastName: singleImage.user.last_name,
+              profilePic: singleImage.user.profile_image.large,
+              totalLikes: singleImage.user.total_likes,
+              comments: {},
+            };
+            finalData.push(tempData);
+          });
+          setLoadingData(false);
+          setPhotosResponse(finalData);
+        })
+        .catch(() => {});
+    }
+  }, [userLogin, refrechHome]);
+
+  const refrechHomeHandler = () => {
+    setRefrechHome(!refrechHome);
+  };
   const displayNotification = (text) => {
     setNotifTxt(text);
     notification.displayNotification();
@@ -67,7 +92,11 @@ const Home = () => {
   };
 
   const logOutHndler = () => {
-    displayModal("Log out" , "You have to sign in again !" , "Okey")
+    displayModal("Log out", "You have to sign in again !", "Log in");
+    auth.signOut();
+    setTimeout(() => {
+      props.history.push("/authentification");
+    }, 2000);
   };
 
   const displayModal = (title, text, btnText) => {
@@ -81,15 +110,15 @@ const Home = () => {
     <div>
       {openOption ? (
         <div
+          className="fixed z-50 top-0   right-0  w-full h-full lg:px-32 "
           onClick={() => {
             if (openOption) {
               setOpenOption(false);
             }
           }}
-          className="fixed z-50 top-0   right-0 border border-2-black w-full h-full lg:px-32 "
         >
           {" "}
-          {openOption ? <Option click={logOutHndler}/> : null}
+          {openOption ? <Option click={logOutHndler} /> : null}
         </div>
       ) : null}
       <CostumModal
@@ -101,6 +130,7 @@ const Home = () => {
       />
       {notification.status ? <Alert text={notifTxt} /> : null}
       <Navbar
+        refresh={refrechHomeHandler}
         showOptioin={clickOpenOption}
         showNotification={displayNotification}
       />
@@ -152,20 +182,23 @@ const Home = () => {
           {/* // ! SECOND BIG PARENT */}
 
           <div className=" hidden w-80 mx-8  pt-8  px-2  lg:block mt-16  ">
-            <div className="relative">
-              {/* side bar information */}
-              {/* Profile insperctor */}
-              <div className="fixed">
-                <ProfileHolder
-                  name="Aoufi abderahmanee"
-                  userName="Abd__ou"
-                  image={assets.profilePic}
-                />
-                <Seggestion data={data} />
-              </div>
+            {userLogin ? (
+              <div className="relative">
+                {/* side bar information */}
+                {/* Profile insperctor */}
+                <div className="fixed">
+                  <ProfileHolder
+                    logOut={logOutHndler}
+                    name={userName}
+                    userName={userName}
+                    image={assets.profilePic}
+                  />
+                  <Seggestion data={data} />
+                </div>
 
-              {/* suggestion */}
-            </div>
+                {/* suggestion */}
+              </div>
+            ) : null}
           </div>
         </section>
       </main>

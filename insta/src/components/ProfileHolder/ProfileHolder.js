@@ -22,9 +22,11 @@ function ProfileHolder(props) {
       </div>
 
       <div>
-        <a href="/" className="font-bold text-sm text-blue-600">
-        {props.sugest ? "follow" : "switch"}
-        </a>
+        {props.sugest ? (
+          <p className="font-bold text-sm text-blue-600 cursor-pointer  cursor-pointer ">follow</p>
+        ) : (
+          <p onClick={props.logOut} className="font-bold text-sm text-blue-600 cursor-pointer ">log out</p>
+        )}
       </div>
     </div>
   );
