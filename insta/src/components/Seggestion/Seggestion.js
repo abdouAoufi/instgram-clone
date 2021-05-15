@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProfileHolder from "../ProfileHolder/ProfileHolder";
 import * as assets from "../../assets";
 import Footer from "../../containers/Auth/Auth/Footer";
 
 function Seggestion(props) {
+  useEffect(() => {});
   return (
     <div>
-      <p className="font-bold text-sm text-gray-400 mb-2 ">
+      <p className="font-bold text-sm text-gray-400 my-4  ">
         Suggestions For You
       </p>
       <div className="">
-        {props.data?.slice(0, 4).map((person) => (
+        {props.data?.slice(0, 5).map((person) => (
           <ProfileHolder
             key={person.id}
             name={person.firstName}

@@ -25,7 +25,7 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
           <MoreHorizIcon className="text-gray-400" />
         </a>
       </div>
-      <div className="p-0 m-0 overflow-hidden relative">
+      <div className="p-0 m-0 overflow-hidden relative min-h-59 ">
         <img
           onDoubleClick={likeThePost}
           className=" select-none object-fit min w-full h-full object-cover"

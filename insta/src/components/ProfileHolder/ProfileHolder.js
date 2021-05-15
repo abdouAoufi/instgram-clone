@@ -4,19 +4,19 @@ import * as assets from "../../assets";
 
 function ProfileHolder(props) {
   return (
-    <div className="flex justify-between  mb-1 w-72 mx-auto  items-center py-2">
+    <div className="flex justify-between   w-72 mx-auto mb-2 items-center py-1">
       <div className="flex items-center">
         <div className="mx-2 ">
           <Avatar
             name={props.namr}
             type={props.sugest ? null : "big"}
-            imgUrl={props.image}
+            imgUrl={props.sugest ? props.image : null}
             alt={props.name}
           />
         </div>
 
         <div className="ml-2 mr-4">
-          <p className="font-bold text-sm">{props.userName}</p>
+          <p className="font-semibold text-sm">{props.userName}</p>
           <p className="text-gray-400 font-normal text-sm">{props.name}</p>
         </div>
       </div>

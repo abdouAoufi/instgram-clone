@@ -13,6 +13,7 @@ import CostumModal from "../../components/Modal/Modal";
 import Loading from "../../components/Loading/Loading";
 import Option from "../../components/Option/Option";
 import { auth } from "../../firebase";
+import axios from "axios";
 
 const api = createApi({
   accessKey: "XIMULt5ue5Ps6Tm7TkKY1YGan2Bj_4K4ybUCE4f3mOE",
@@ -28,16 +29,16 @@ const Home = (props) => {
   const [open, setOpen] = useState(false);
   const [openOption, setOpenOption] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
-  const [data, setPhotosResponse] = useState(null);
+  const [data, setPhotosResponse] = useState([]);
+  const [stories, setStories] = useState(null);
   const [notifTxt, setNotifTxt] = useState("Welcome ...! ");
   const notification = useContext(NotificationContext);
   const randomIndex = Math.floor(Math.random() * assets.categories.length);
-  const randomCategory = assets.categories[randomIndex];
+  let randomCategory = assets.categories[randomIndex];
 
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
-        console.log(user);
         setUserName(user.displayName);
         setUserLogin(true);
         setOpen(true);
@@ -48,6 +49,8 @@ const Home = (props) => {
       }
     });
   }, []);
+
+
 
   useEffect(() => {
     if (userLogin) {

@@ -7,10 +7,6 @@ import Option from "../Option/Option";
 
 const Navbar = (props) => {
   const mr = "mx-3";
-  const [searchIconMove, setsearchIconMove] = useState(false);
-  const moveSearchIcon = () => {
-    setsearchIconMove(true);
-  };
   const notification = useContext(NotificationContext);
   // ! MOBILE FIRST
   return (
@@ -24,25 +20,22 @@ const Navbar = (props) => {
         </div>
         <div className="hidden lg:flex-1 lg:block">
           <div
-            className={`justify-center text-sm py-1 flex p-0.5 items-center border overflow-hidden w-56 border border-gray-200 rounded ${
-              !searchIconMove ? "pl-36" : "lg:pl-2 pl-6"
-            }`}
+            className={`justify-between text-sm py-1 flex p-0.5 items-center border overflow-hidden w-59 border border-gray-200 rounded `}
           >
             <SearchIcon
-              style={{ fontSize: 17, cursor: "pointer" }}
+              style={{ fontSize: 17, cursor: "pointer" , marginRight : 4 , marginLeft : 4}}
               color="disabled"
             />
             <input
-              onClick={moveSearchIcon}
               type="text"
               placeholder="Search"
-              className="outline-none "
+              className=" flex-1 outline-none "
             />
           </div>
         </div>
         {/* // ! Home */}
         <div className="flex items-center relative  ">
-          <div className={`${mr} hidden lg:block cursor-pointer`}>
+          <div onClick={props.refresh} className={`${mr} hidden lg:block cursor-pointer`}>
             <svg
               aria-label="Home"
               fill="#262626"
@@ -113,7 +106,7 @@ const Navbar = (props) => {
           </div>
 
           <div onClick={props.showOptioin} className={`${mr}  cursor-pointer `} href="/profile">
-            <Avatar type={"small"} imgUrl={assets.profilePic} />
+            <Avatar type={"small"} imgUrl={null} />
           </div>
         </div>
       </div>

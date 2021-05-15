@@ -12,6 +12,7 @@ import { auth } from "../../../firebase";
 function Auth(props) {
   const [notifTxt, setNotifTxt] = useState("Error something went wrong !");
   const [isLogin, setIsLogin] = useState(true);
+  const [userSignIn , setUserSignIn] = useState(false);
   const hideForLogin = { display: isLogin ? "none" : "block" };
   const showForLogin = { display: isLogin ? "block" : "none" };
   const headingStyle = "mb-4 text-center text-sm font-bold text-gray-500";
@@ -31,9 +32,10 @@ function Auth(props) {
           props.history.replace("/");
         }, 1000);
       } else {
+        // setUserSignIn(true); // that means the user is signin  
       }
     });
-  }, []);
+  }, [userSignIn]);
 
   const showinfo = ({ email, password, fullName }) => {
     if (isLogin) {
@@ -50,11 +52,10 @@ function Auth(props) {
       .then((userCredential) => {
         // Signed in
         let user = userCredential.user;
-        console.log(user);
+        setUserSignIn(true);
         // ...
       })
       .catch((error) => {
-        let errorCode = error.code;
         let errorMessage = error.message;
         displayNotification(errorMessage);
       });
@@ -67,11 +68,8 @@ function Auth(props) {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        // Signed in
         let user = userCredential.user;
         updateProfile(user, displayName);
-
-        // ...
       })
       .catch((error) => {
         let errorMessage = error.message;
@@ -84,7 +82,7 @@ function Auth(props) {
     user
       .updateProfile({ displayName: userName })
       .then((response) => {
-        alert("success");
+        setUserSignIn(true);
       })
       .catch((error) => {
         alert("failed");
@@ -100,6 +98,7 @@ function Auth(props) {
   };
   //  ! Mobile first
 
+  console.log("Rerendring .....");
   return (
     <div className={papaStyle}>
       {notification.status ? <Alert text={notifTxt} /> : null}

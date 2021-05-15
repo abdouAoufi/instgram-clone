@@ -30,6 +30,9 @@ const Footer = (props) => {
         <a href="/" className="text-xs font-normal text-gray-500 mr-3 ">
           Location
         </a>
+        <a href="/" className="text-xs font-normal text-gray-500 mr-3 ">
+          Top accounts
+        </a>
       </div>
   );
 };
