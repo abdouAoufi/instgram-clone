@@ -26,7 +26,7 @@ export default function ImageAvatars({ type, imgUrl }) {
   return (
     <div className={classes.root}>
       <Avatar
-        alt="Remy Sharp"
+        alt="R"
         src={imgUrl}
         className={type === "small" ? classes.small : type === "big" ? classes.large : null}
       />

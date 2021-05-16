@@ -16,7 +16,7 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
     <div className=" h-auto bg-white  m-auto border border-gray-300 my-8 rounded mb-8">
       <div className=" flex justify-between items-center py-2 px-2  ">
         <div className="flex justify-between items-center">
-          <Avatar className="mr-3" src={profileImg} alt="Maissa" />
+          <Avatar className="mr-3" src={profileImg} alt={userName} />
           <a href="/" className="font-semibold inline-block hover:underline">
             {userName}
           </a>
@@ -25,13 +25,13 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
           <MoreHorizIcon className="text-gray-400" />
         </a>
       </div>
-      <div className="p-0 m-0 overflow-hidden relative min-h-59 ">
+      <div className="p-0 m-0   min-h-59 ">
         <img
           onDoubleClick={likeThePost}
           className=" select-none object-fit min w-full h-full object-cover"
           style={{ maxHeight: 650 }}
           src={imageUrl}
-          alt=""
+          alt={caption}
         />
       </div>
       {/* buttons  */}
@@ -135,22 +135,27 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
         </div>
 
         {/* comments */}
-        <div className="  mb-1">
-          <p className="text-sm">
-            <span className="font-bold">{"gold.ol"}</span>{" "}
-            {"Amazing job bro ! "}
-          </p>
-        </div>
+        {numOfLikes > 0 ? (
+          <div className="">
+            <div className="  mb-1">
+              <p className="text-sm">
+                <span className="font-bold">{"gold.ol"}</span>{" "}
+                {"Amazing job bro ! "}
+              </p>
+            </div>
 
-        <div className="  mb-1">
-          <p className="text-sm">
-            <span className="font-bold">{"go.bes"}</span>{" "}
-            {"Hard work works bro ... "}
-          </p>
-        </div>
+            <div className="  mb-1">
+              <p className="text-sm">
+                <span className="font-bold">{"go.bes"}</span>{" "}
+                {"Hard work works bro ... "}
+              </p>
+            </div>
+          </div>
+        ) : null}
+
         {/* time holder */}
         <div className="  mt-2 mb-2 font-light text-gray-400 text-xs">
-          {Math.floor(Math.random() * 24 )} HOURS AGO 
+          {Math.floor(Math.random() * 24)} HOURS AGO
         </div>
       </div>
       {/* comment section */}

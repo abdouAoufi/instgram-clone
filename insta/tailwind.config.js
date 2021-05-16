@@ -24,7 +24,7 @@ module.exports = {
       black: colors.black,
       gray: colors.coolGray,
       red: colors.rose,
-      blue: colors.lightBlue,
+      blue: colors.blue,
       pink: colors.fuchsia,
       white: "#FFFFFF",
       pop: "#f85959",
@@ -34,6 +34,11 @@ module.exports = {
       serif: ["Merriweather", "serif"],
     },
     extend: {
+      colors: {
+        niceBlack: "#000000",
+        black: colors.black,
+        blue: colors.blue,
+      },
       spacing: {
         150: "37.5rem",
         128: "32rem",

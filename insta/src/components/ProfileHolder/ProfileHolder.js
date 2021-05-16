@@ -3,12 +3,13 @@ import Avatar from "../Avatar/Avatar";
 import * as assets from "../../assets";
 
 function ProfileHolder(props) {
+  console.log(props.name)
   return (
     <div className="flex justify-between   w-72 mx-auto mb-2 items-center py-1">
       <div className="flex items-center">
         <div className="mx-2 ">
           <Avatar
-            name={props.namr}
+            name={props.name}
             type={props.sugest ? null : "big"}
             imgUrl={props.sugest ? props.image : null}
             alt={props.name}

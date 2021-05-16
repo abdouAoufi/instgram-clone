@@ -12,8 +12,11 @@ import Alert from "../../components/Alerts/Alert";
 import CostumModal from "../../components/Modal/Modal";
 import Loading from "../../components/Loading/Loading";
 import Option from "../../components/Option/Option";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import axios from "axios";
+import TestCompo from "../../components/TestCompo/TestCompo";
+import ContModal from "../../components/Modal/ContModal";
+import UploadBtn from "../../components/Button/TailUploadBtn";
 
 const api = createApi({
   accessKey: "XIMULt5ue5Ps6Tm7TkKY1YGan2Bj_4K4ybUCE4f3mOE",
@@ -22,6 +25,7 @@ const api = createApi({
 const Home = (props) => {
   const [refrechHome, setRefrechHome] = useState(true);
   const [userName, setUserName] = useState("");
+  const [user, setUser] = useState(null);
   const [userLogin, setUserLogin] = useState(false);
   const [titleModalText, seTitleModalText] = useState("welcome");
   const [insideModalText, setInsideleModalText] = useState(assets.textWelcome);
@@ -29,9 +33,15 @@ const Home = (props) => {
   const [open, setOpen] = useState(false);
   const [openOption, setOpenOption] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
-  const [data, setPhotosResponse] = useState([]);
+  const [data, setCollectionData] = useState([]);
   const [stories, setStories] = useState(null);
   const [notifTxt, setNotifTxt] = useState("Welcome ...! ");
+  const [fireBaseData, setFireBaseData] = useState([]);
+  const [unsplashData, setUnsplashData] = useState([]);
+  const [uploadWindow, setUploadWindow] = useState(false);
+  const [refreshFireBase , setRefreshFireBase] = useState(false)
+  const [refreshUnsplash , setRefreshUnsplash] = useState(false)
+
   const notification = useContext(NotificationContext);
   const randomIndex = Math.floor(Math.random() * assets.categories.length);
   let randomCategory = assets.categories[randomIndex];
@@ -39,6 +49,7 @@ const Home = (props) => {
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
+        setUser(user);
         setUserName(user.displayName);
         setUserLogin(true);
         setOpen(true);
@@ -50,7 +61,21 @@ const Home = (props) => {
     });
   }, []);
 
+  // ! get data from fireBase
 
+  useEffect(() => {
+    db.collection("posts")
+      .orderBy("createAt", "desc")
+      .get()
+      .then((querySnapshot) => {
+        setLoadingData(false);
+        let tempHolder = [];
+        querySnapshot.forEach((doc) => {
+          tempHolder.push(doc.data());
+        });
+        setFireBaseData(tempHolder);
+      });
+  }, [userLogin, refreshFireBase , refrechHome]);
 
   useEffect(() => {
     if (userLogin) {
@@ -75,12 +100,18 @@ const Home = (props) => {
             };
             finalData.push(tempData);
           });
-          setLoadingData(false);
-          setPhotosResponse(finalData);
+          // setLoadingData(false);
+          setUnsplashData(finalData);
         })
         .catch(() => {});
     }
-  }, [userLogin, refrechHome]);
+  }, [userLogin, refrechHome , refreshUnsplash]);
+
+  useEffect(() => {
+    if (unsplashData.length > 0) {
+      setCollectionData([...fireBaseData].concat(unsplashData));
+    }
+  }, [unsplashData, fireBaseData]);
 
   const refrechHomeHandler = () => {
     setRefrechHome(!refrechHome);
@@ -109,11 +140,20 @@ const Home = (props) => {
     setBtnModalText(btnText);
   };
 
+  const showUploadHadler = () => {
+    setUploadWindow(true);
+  };
+
+  const fetchNewData = () => {
+    setRefreshFireBase(!refreshFireBase);
+  };
+
   return (
+    // option cont
     <div>
       {openOption ? (
         <div
-          className="fixed z-50 top-0   right-0  w-full h-full lg:px-32 "
+          className="fixed z-50 block top-0 right-0 w-full h-full lg:px-32 "
           onClick={() => {
             if (openOption) {
               setOpenOption(false);
@@ -124,6 +164,12 @@ const Home = (props) => {
           {openOption ? <Option click={logOutHndler} /> : null}
         </div>
       ) : null}
+      <div className="fixed z-100  bottom-4 w-auto lg:right-16 right-8   ">
+        {" "}
+        <div>
+          <UploadBtn click={showUploadHadler} />
+        </div>
+      </div>
       <CostumModal
         open={open}
         setOpen={() => setOpen(!open)}
@@ -131,6 +177,14 @@ const Home = (props) => {
         title={titleModalText}
         btnText={btnModalText}
       />
+
+      <ContModal
+        open={uploadWindow}
+        setOpen={() => setUploadWindow(!uploadWindow)}
+      >
+        <TestCompo user={user} fetchData={fetchNewData} />
+      </ContModal>
+
       {notification.status ? <Alert text={notifTxt} /> : null}
       <Navbar
         refresh={refrechHomeHandler}
@@ -157,7 +211,7 @@ const Home = (props) => {
                 )}
                 className=" w-full flex  py-4 px-2 flex-nowrap mt-1 mb-1 border  border rounded bg-white story-container "
               >
-                {data?.map((persone) => (
+                {unsplashData?.map((persone) => (
                   <StoryHolder
                     key={persone.id}
                     name={persone.firstName}
@@ -196,7 +250,7 @@ const Home = (props) => {
                     userName={userName}
                     image={assets.profilePic}
                   />
-                  <Seggestion data={data} />
+                  <Seggestion data={unsplashData} />
                 </div>
 
                 {/* suggestion */}

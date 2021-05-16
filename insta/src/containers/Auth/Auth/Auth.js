@@ -21,7 +21,7 @@ function Auth(props) {
   const windowStyle =
     "bg-white lg:border lg:border-gray-300 rounded shadow  w-full  md:w-8/12 mx-2  md:mt-4 mb-2  py-4 flex flex-col justify-center place-items-center lg:w-96";
   const papaStyle =
-    "bg-gray-100 flex flex-col justify-center place-items-center";
+    " flex flex-col justify-center place-items-center";
 
   // ! Redirect if the user logged in
   useEffect(() => {
