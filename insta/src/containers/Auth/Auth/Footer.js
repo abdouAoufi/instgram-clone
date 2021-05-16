@@ -1,7 +1,6 @@
 import React from "react";
 
 const Footer = (props) => {
-  const fontSize = "text-sm"
   return (
       <div className={`mx-auto mb-4  w-full ${!props.type ? "text-center" : "text-left"}`}>
         <a href="/" className="text-xs font-normal text-gray-500 mr-3 ">

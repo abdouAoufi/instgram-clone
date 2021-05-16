@@ -1,6 +1,5 @@
 import React from "react";
 import Avatar from "../Avatar/Avatar";
-import * as assets from "../../assets";
 
 function ProfileHolder(props) {
   console.log(props.name)

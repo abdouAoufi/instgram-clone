@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
-// const urlImage = ""
 
 const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
   const [like, setLike] = useState(false);
@@ -90,7 +89,6 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
             </svg>
           </div>
         </div>
-        {/* //! save */}
         <div className="mx-2 cursor-pointer" onClick={() => setSave(true)}>
           {!save ? (
             <svg
@@ -115,28 +113,23 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
           )}
         </div>
       </div>
-      {/* Container */}
       <div className=" px-4">
-        {/* number of likes  */}
         <div className="mt-1  mb-1 ">
           <p className=" text-sm font-bold">{`${numOfLikes} likes`}</p>
         </div>
-
-        {/* caption */}
         <div className="mb-1">
           <a className="text-sm" href="/">
             <span className="font-bold">{userName}</span> {caption}
           </a>
         </div>
-        {/* view comments  */}
-        <div className=" mb-1 font-bold text-gray-400 text-sm">
-          {" "}
-          <a href="/">view all {Math.floor(numOfLikes / 2)} comments</a>{" "}
-        </div>
-
-        {/* comments */}
         {numOfLikes > 0 ? (
           <div className="">
+            <div className=" mb-1 font-bold text-gray-400 text-sm">
+              {" "}
+              <a href="/">
+                view all {Math.floor(numOfLikes / 2)} comments
+              </a>{" "}
+            </div>
             <div className="  mb-1">
               <p className="text-sm">
                 <span className="font-bold">{"gold.ol"}</span>{" "}
@@ -152,15 +145,11 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
             </div>
           </div>
         ) : null}
-
-        {/* time holder */}
         <div className="  mt-2 mb-2 font-light text-gray-400 text-xs">
           {Math.floor(Math.random() * 24)} HOURS AGO
         </div>
       </div>
-      {/* comment section */}
       <div className="flex justify-between py-3 items-center border-t px-3">
-        {/* smile */}
         <div className="mr-2">
           <svg
             aria-label="Emoji"
@@ -173,7 +162,6 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
             <path d="M34.9 24c0-1.4-1.1-2.5-2.5-2.5s-2.5 1.1-2.5 2.5 1.1 2.5 2.5 2.5 2.5-1.1 2.5-2.5zm-21.8 0c0-1.4 1.1-2.5 2.5-2.5s2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5-2.5-1.1-2.5-2.5zM24 37.3c-5.2 0-8-3.5-8.2-3.7-.5-.6-.4-1.6.2-2.1.6-.5 1.6-.4 2.1.2.1.1 2.1 2.5 5.8 2.5 3.7 0 5.8-2.5 5.8-2.5.5-.6 1.5-.7 2.1-.2.6.5.7 1.5.2 2.1 0 .2-2.8 3.7-8 3.7z"></path>
           </svg>
         </div>
-        {/* input */}
         <div className="flex-1">
           <input
             className="w-full pl-1 outline-none text-sm text-black-500"
@@ -181,7 +169,6 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
             placeholder="Add a comment.."
           />
         </div>
-        {/* post */}
         <div className="text-sm font-bold text-blue-500 cursor-pointer ">
           Post
         </div>

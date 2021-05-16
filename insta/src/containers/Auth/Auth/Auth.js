@@ -23,7 +23,6 @@ function Auth(props) {
   const papaStyle =
     " flex flex-col justify-center place-items-center";
 
-  // ! Redirect if the user logged in
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
@@ -46,7 +45,6 @@ function Auth(props) {
   };
 
   const signIn = (email, passwod) => {
-    console.log("Sign in .....");
     auth
       .signInWithEmailAndPassword(email, passwod)
       .then((userCredential) => {
@@ -62,9 +60,6 @@ function Auth(props) {
   };
 
   const signUp = (email, password, displayName) => {
-    // ! SIGN UP
-    console.log("Sign up .....");
-
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
@@ -96,9 +91,6 @@ function Auth(props) {
     setNotifTxt(text);
     notification.displayNotification();
   };
-  //  ! Mobile first
-
-  console.log("Rerendring .....");
   return (
     <div className={papaStyle}>
       {notification.status ? <Alert text={notifTxt} /> : null}
@@ -175,14 +167,12 @@ function Auth(props) {
           </span>
         </p>
       </div>
-      {/* app store and play store */}
       <p className="text-lg mt-4 mb-6   ">Get the app. </p>
       <GetApp />
       <div>
         <Footer />
       </div>
 
-      {/* Language copyRight */}
       <div className="flex justify-center mb-12">
         <a className="text-xs mx-4 text-gray-600" href="/">
           English

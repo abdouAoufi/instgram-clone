@@ -19,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[10],
     overflow: "hidden",
-    // padding: theme.spacing(2, 4, 3),
   },
 }));
 

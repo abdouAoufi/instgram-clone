@@ -1,7 +1,7 @@
 import React , {useContext} from "react";
 import NotificationContext  from "../../notification-context";  
 
-const Alert = ({ color, display, text }) => {
+const Alert = ({  text }) => {
   const notification = useContext(NotificationContext);
   return (
     <div

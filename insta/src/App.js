@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch , Redirect } from "react-router-dom";
 import Auth from "./containers/Auth/Auth/Auth";
 import Home from "./containers/Home/Home";
 import NotificationContext from "./notification-context";
@@ -24,7 +24,7 @@ function App() {
         <Switch>
           <Route path="/authentification" exact component={Auth}></Route>
           <Route path="/" exact component={Home}></Route>
-          <Route path="/test" exact component={Test}></Route>
+          <Redirect to="/" />
         </Switch>
       </NotificationContext.Provider>
     </Router>

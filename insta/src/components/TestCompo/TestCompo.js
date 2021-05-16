@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState } from "react";
 import { db, storage } from "../../firebase";
-import axios from "axios";
 import TailInput from "../Input/TailInput";
-import TailBtn from "../Button/TailBtn";
 import firebase from "firebase";
 import LoadinSm from "../Loading/LoadingSm";
 
@@ -11,28 +9,19 @@ function TestCompo({ user, fetchData }) {
   const [image, setImage] = useState(null);
   const [imageName, setImageName] = useState(0);
   const [loadingState, setLoadingState] = useState(false);
-  const [progressUpload, setProgress] = useState(null);
-  const getDataFromServer = () => {
-    db.collection("posts")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          console.log(doc.data());
-        });
-      });
-  };
+
   const postDataToServer = (url) => {
     let tempData = {
       id: new Date().getTime(),
       descreption: caption,
       createAt: firebase.firestore.Timestamp.fromDate(new Date()),
-      smallImage: "not data for now", // ! we don't have it
-      firstName: user.displayName, // we have it
-      fullImage: url, // we got it
-      lastName: user.displayName, // we have it
-      profilePic: "not data for now", // ! we dont have it
-      username: user.displayName, // we have it
-      totalLikes: 0, // we can fake it
+      smallImage: "not data for now",
+      firstName: user.displayName,
+      fullImage: url,
+      lastName: user.displayName,
+      profilePic: "not data for now",
+      username: user.displayName,
+      totalLikes: 0,
       comments: {},
     };
     db.collection("posts")
@@ -56,10 +45,10 @@ function TestCompo({ user, fetchData }) {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log(progress);
         switch (snapshot.state) {
-          case firebase.storage.TaskState.PAUSED: // or 'paused'
+          case firebase.storage.TaskState.PAUSED:
             console.log("Upload is paused");
             break;
-          case firebase.storage.TaskState.RUNNING: // or 'running'
+          case firebase.storage.TaskState.RUNNING:
             console.log("Upload is running");
             break;
           case firebase.storage.TaskState.ERROR:
@@ -73,12 +62,8 @@ function TestCompo({ user, fetchData }) {
             console.log("Default behavior");
         }
       },
-      (error) => {
-        // Handle unsuccessful uploads
-      },
+      (error) => {},
       () => {
-        // Handle successful uploads on complete
-        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
           console.log("File available at", downloadURL);
           postDataToServer(downloadURL);
@@ -91,13 +76,9 @@ function TestCompo({ user, fetchData }) {
     setCaption(e.target.value);
   };
   const doneHandler = () => {
-    // console.log("actince");
     handleUpload();
   };
 
-  const getHandler = () => {
-    getDataFromServer();
-  };
   const fileChangeHandler = (e) => {
     setImage(e.target.files[0]);
     setImageName(e.target.files[0].name);
@@ -109,23 +90,10 @@ function TestCompo({ user, fetchData }) {
       ) : (
         <div className=" relative flex justify-between flex-col mx-auto h-full">
           <div className="text-base font-semibold text-gray-500 text-center mb-1    border-b py-3">
-            Uploading images 
+            Uploading images
           </div>
-          <TailInput label="Caption " change={changeHandler} />
+          <TailInput change={changeHandler} />
           <div className="relative w-64 mt-4 mb-4">
-            {/* <button   className="bg-blue-400  hover:bg-indigo-dark text-white font-bold py-2 px-4 w-full inline-flex items-center">
-              <svg
-                fill="#FFF"
-                height="18"
-                viewBox="0 0 24 24"
-                width="18"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path d="M9 16h6v-6h4l-7-7-7 7h4zm-4 2h14v2H5z" />
-              </svg>
-              <span className="ml-2">Please choose a picture </span>
-            </button> */}
             <input
               className="cursor-pointer  border block opacity-1 w-full"
               type="file"
@@ -134,17 +102,15 @@ function TestCompo({ user, fetchData }) {
               multiple
             />
           </div>
-
-          {/* <TailBtn
-            
-            
-            text="post"
-          /> */}
-
-          <div    className="text-base    font-bold text-blue-600 text-center py-3 border-t ">
-            <button disabled={!imageName.length > 0} onClick={doneHandler} className="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">upload</button>
+          <div className="text-base    font-bold text-blue-600 text-center py-3 border-t ">
+            <button
+              disabled={!imageName.length > 0}
+              onClick={doneHandler}
+              className="cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              upload
+            </button>
           </div>
-          {/* <TailBtn click={getHandler} text="get" /> */}
         </div>
       )}
     </div>

@@ -13,7 +13,6 @@ import CostumModal from "../../components/Modal/Modal";
 import Loading from "../../components/Loading/Loading";
 import Option from "../../components/Option/Option";
 import { auth, db } from "../../firebase";
-import axios from "axios";
 import TestCompo from "../../components/TestCompo/TestCompo";
 import ContModal from "../../components/Modal/ContModal";
 import UploadBtn from "../../components/Button/TailUploadBtn";
@@ -21,9 +20,7 @@ import UploadBtn from "../../components/Button/TailUploadBtn";
 const api = createApi({
   accessKey: "XIMULt5ue5Ps6Tm7TkKY1YGan2Bj_4K4ybUCE4f3mOE",
 });
-// CREATE ARRAY LIST HOLDS OBJECTS {description , created_at , urls}
 const Home = (props) => {
-  const [refrechHome, setRefrechHome] = useState(true);
   const [userName, setUserName] = useState("");
   const [user, setUser] = useState(null);
   const [userLogin, setUserLogin] = useState(false);
@@ -34,14 +31,12 @@ const Home = (props) => {
   const [openOption, setOpenOption] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
   const [data, setCollectionData] = useState([]);
-  const [stories, setStories] = useState(null);
   const [notifTxt, setNotifTxt] = useState("Welcome ...! ");
   const [fireBaseData, setFireBaseData] = useState([]);
   const [unsplashData, setUnsplashData] = useState([]);
   const [uploadWindow, setUploadWindow] = useState(false);
-  const [refreshFireBase , setRefreshFireBase] = useState(false)
-  const [refreshUnsplash , setRefreshUnsplash] = useState(false)
-
+  const [refreshFireBase, setRefreshFireBase] = useState(false);
+  const [refreshUnsplash, setRefreshUnsplash] = useState(false);
   const notification = useContext(NotificationContext);
   const randomIndex = Math.floor(Math.random() * assets.categories.length);
   let randomCategory = assets.categories[randomIndex];
@@ -54,14 +49,11 @@ const Home = (props) => {
         setUserLogin(true);
         setOpen(true);
       } else {
-        console.log("USER IS LOGGED OUT");
         logOutHndler();
         setUserLogin(false);
       }
     });
   }, []);
-
-  // ! get data from fireBase
 
   useEffect(() => {
     db.collection("posts")
@@ -75,7 +67,7 @@ const Home = (props) => {
         });
         setFireBaseData(tempHolder);
       });
-  }, [userLogin, refreshFireBase , refrechHome]);
+  }, [userLogin, refreshFireBase]);
 
   useEffect(() => {
     if (userLogin) {
@@ -105,7 +97,7 @@ const Home = (props) => {
         })
         .catch(() => {});
     }
-  }, [userLogin, refrechHome , refreshUnsplash]);
+  }, [userLogin, refreshUnsplash]);
 
   useEffect(() => {
     if (unsplashData.length > 0) {
@@ -114,7 +106,7 @@ const Home = (props) => {
   }, [unsplashData, fireBaseData]);
 
   const refrechHomeHandler = () => {
-    setRefrechHome(!refrechHome);
+    setRefreshUnsplash(!refreshUnsplash);
   };
   const displayNotification = (text) => {
     setNotifTxt(text);
@@ -149,7 +141,6 @@ const Home = (props) => {
   };
 
   return (
-    // option cont
     <div>
       {openOption ? (
         <div
@@ -191,16 +182,12 @@ const Home = (props) => {
         showOptioin={clickOpenOption}
         showNotification={displayNotification}
       />
-
-      {/* stories */}
       <main>
         <section
           onClick={(e) => e.stopPropagation()}
           className="block lg:flex lg:justify-between lg:px-32"
         >
-          {/* // ! FIRST BIG PARRENT  */}
           <div className="w-full lg:w-150 mt-20">
-            {/* stories */}
             {loadingData ? (
               <Loading />
             ) : (
@@ -220,10 +207,7 @@ const Home = (props) => {
                 ))}
               </div>
             )}
-
-            {/* feeds */}
             {data?.map((persone) => {
-              // console.log(persone.description);
               return (
                 <Post
                   likes={persone.totalLikes}
@@ -236,13 +220,9 @@ const Home = (props) => {
               );
             })}
           </div>
-          {/* // ! SECOND BIG PARENT */}
-
           <div className=" hidden w-80 mx-8  pt-8  px-2  lg:block mt-16  ">
             {userLogin ? (
               <div className="relative">
-                {/* side bar information */}
-                {/* Profile insperctor */}
                 <div className="fixed">
                   <ProfileHolder
                     logOut={logOutHndler}
@@ -252,14 +232,11 @@ const Home = (props) => {
                   />
                   <Seggestion data={unsplashData} />
                 </div>
-
-                {/* suggestion */}
               </div>
             ) : null}
           </div>
         </section>
       </main>
-      {/* maincontainer */}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 
-function TailInput({ label, change }) {
+function TailInput({ change }) {
   return (
     <div>
       <div className="flex">

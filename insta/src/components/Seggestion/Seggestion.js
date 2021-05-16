@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ProfileHolder from "../ProfileHolder/ProfileHolder";
-import * as assets from "../../assets";
 import Footer from "../../containers/Auth/Auth/Footer";
 
 function Seggestion(props) {
@@ -21,8 +20,6 @@ function Seggestion(props) {
           />
         ))}
       </div>
-
-      {/* Language copyRight */}
       <div className="mx-2 mt-4">
         <Footer type={true} />
         <a className="text-xs mr-4 text-gray-600" href="/">

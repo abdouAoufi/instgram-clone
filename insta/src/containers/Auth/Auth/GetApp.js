@@ -15,7 +15,7 @@ function GetApp() {
               </svg>
             </div>
             <div>
-              <div className="text-xs">Download on the</div>
+              <div className="text-xs">Download on </div>
               <div className="text-lg font-semibold font-sans -mt-1">
                 App Store
               </div>
