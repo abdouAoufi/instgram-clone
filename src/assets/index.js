@@ -1,5 +1,5 @@
-import Logo from "./assets/images/logo.png";
-import LogoTypo from "./assets/images/instagram.png";
+import Logo from "./images/logo.png";
+import LogoTypo from "./images/instagram.png";
 
 export const categories = ["car", "people", "wallpaper", "girl", "portrait" , "mountain" , "web" , "internet" , "land"];
 

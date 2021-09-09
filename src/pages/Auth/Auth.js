@@ -1,18 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
-import * as assets from "../../../assets";
-import Footer from "./Footer";
-import FormLogin from "./FormLogin";
-import FormSigUp from "./FormSignUP";
-import GetApp from "./GetApp";
-import OrComponent from "./OrComponent";
-import Alert from "../../../components/Alerts/Alert";
-import NotificationContext from "../../../notification-context";
-import { auth } from "../../../firebase";
+import * as assets from "../../assets";
+import Footer from "../../components/Footer/Footer";
+import Login from "./Auth/Login/Login";
+import Register from "./Auth/Register/Register";
+import Download from "../../components/Download/GetApp";
+import Alert from "../../components/Alerts/Alert";
+import NotificationContext from "../../context/notification";
+// import { auth } from "../../utils/firebase";
 
 function Auth(props) {
+  const container_classes = "flex justify-around align-center w-72";
+  const heading_classes = "mb-4 text-center text-sm font-bold text-gray-500";
   const [notifTxt, setNotifTxt] = useState("Error something went wrong !");
   const [isLogin, setIsLogin] = useState(true);
-  const [userSignIn , setUserSignIn] = useState(false);
+  const [userSignIn, setUserSignIn] = useState(false);
+  const notification = useContext(NotificationContext);
   const hideForLogin = { display: isLogin ? "none" : "block" };
   const showForLogin = { display: isLogin ? "block" : "none" };
   const headingStyle = "mb-4 text-center text-sm font-bold text-gray-500";
@@ -20,69 +22,68 @@ function Auth(props) {
     "rounded text-white m-auto w-65 mb-4 py-1 px-4 text-base font-bold bg-blue-300";
   const windowStyle =
     "bg-white lg:border lg:border-gray-300 rounded shadow  w-full  md:w-8/12 mx-2  md:mt-4 mb-2  py-4 flex flex-col justify-center place-items-center lg:w-96";
-  const papaStyle =
-    " flex flex-col justify-center place-items-center";
+  const papaStyle = " flex flex-col justify-center place-items-center";
 
-  useEffect(() => {
-    auth.onAuthStateChanged(function (user) {
-      if (user) {
-        displayNotification("User already logged in !");
-        setTimeout(() => {
-          props.history.replace("/");
-        }, 1000);
-      } else {
-        // setUserSignIn(true); // that means the user is signin  
-      }
-    });
-  }, [userSignIn]);
+  // useEffect(() => {
+  //   auth.onAuthStateChanged(function (user) {
+  //     if (user) {
+  //       displayNotification("User already logged in !");
+  //       setTimeout(() => {
+  //         props.history.replace("/");
+  //       }, 1000);
+  //     } else {
+  //       // setUserSignIn(true); // that means the user is signin
+  //     }
+  //   });
+  // }, [userSignIn]);
 
-  const showinfo = ({ email, password, fullName }) => {
-    if (isLogin) {
-      signIn(email, password);
-    } else {
-      signUp(email, password, fullName);
-    }
-  };
+  // const showinfo = ({ email, password, fullName }) => {
+  //   if (isLogin) {
+  //     signIn(email, password);
+  //   } else {
+  //     signUp(email, password, fullName);
+  //   }
+  // };
 
-  const signIn = (email, passwod) => {
-    auth
-      .signInWithEmailAndPassword(email, passwod)
-      .then((userCredential) => {
-        // Signed in
-        let user = userCredential.user;
-        setUserSignIn(true);
-        // ...
-      })
-      .catch((error) => {
-        let errorMessage = error.message;
-        displayNotification(errorMessage);
-      });
-  };
+  // const signIn = (email, passwod) => {
+  //   auth
+  //     .signInWithEmailAndPassword(email, passwod)
+  //     .then((userCredential) => {
+  //       // Signed in
+  //       let user = userCredential.user;
+  //       setUserSignIn(true);
+  //       // ...
+  //     })
+  //     .catch((error) => {
+  //       let errorMessage = error.message;
+  //       displayNotification(errorMessage);
+  //     });
+  // };
 
-  const signUp = (email, password, displayName) => {
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        let user = userCredential.user;
-        updateProfile(user, displayName);
-      })
-      .catch((error) => {
-        let errorMessage = error.message;
-        displayNotification(errorMessage);
-      });
-  };
-  const notification = useContext(NotificationContext);
+  // const signUp = (email, password, displayName) => {
+  //   auth
+  //     .createUserWithEmailAndPassword(email, password)
+  //     .then((userCredential) => {
+  //       let user = userCredential.user;
+  //       updateProfile(user, displayName);
+  //     })
+  //     .catch((error) => {
+  //       let errorMessage = error.message;
+  //       displayNotification(errorMessage);
+  //     });
+  // };
 
-  const updateProfile = (user, userName) => {
-    user
-      .updateProfile({ displayName: userName })
-      .then((response) => {
-        setUserSignIn(true);
-      })
-      .catch((error) => {
-        alert("failed");
-      });
-  };
+  // const updateProfile = (user, userName) => {
+  //   user
+  //     .updateProfile({ displayName: userName })
+  //     .then((response) => {
+  //       setUserSignIn(true);
+  //     })
+  //     .catch((error) => {
+  //       alert("failed");
+  //     });
+  // };
+
   const switchBetweenTask = () => {
     setIsLogin(!isLogin);
   };
@@ -106,16 +107,38 @@ function Auth(props) {
         >
           Log in with Facebook
         </button>
-        {!isLogin ? <OrComponent /> : null}
+        {!isLogin ? (
+          <div className={container_classes}>
+            <div
+              className="w-full mr-2   mt-3 bg-gray-200"
+              style={{ height: 1 }}
+            ></div>
+            <p className={heading_classes}> OR </p>
+            <div
+              className=" mt-3 w-full ml-2   bg-gray-200"
+              style={{ height: 1 }}
+            >
+              {" "}
+            </div>
+          </div>
+        ) : null}
 
-        <div>
-          {isLogin ? (
-            <FormLogin info={showinfo} />
-          ) : (
-            <FormSigUp info={showinfo} />
-          )}
-        </div>
-        {isLogin ? <OrComponent /> : null}
+        <div>{isLogin ? <Login /> : <Register />}</div>
+        {isLogin ? (
+          <div className={container_classes}>
+            <div
+              className="w-full mr-2   mt-3 bg-gray-200"
+              style={{ height: 1 }}
+            ></div>
+            <p className={heading_classes}> OR </p>
+            <div
+              className=" mt-3 w-full ml-2   bg-gray-200"
+              style={{ height: 1 }}
+            >
+              {" "}
+            </div>
+          </div>
+        ) : null}
 
         <p
           style={showForLogin}
@@ -168,7 +191,7 @@ function Auth(props) {
         </p>
       </div>
       <p className="text-lg mt-4 mb-6   ">Get the app. </p>
-      <GetApp />
+      <Download />
       <div>
         <Footer />
       </div>
