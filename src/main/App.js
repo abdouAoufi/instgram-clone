@@ -1,9 +1,15 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch , Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import Auth from "../pages/Auth/Auth";
 // import Home from "./containers/Home/Home";
 import NotificationContext from "../context/notification";
 import React, { useState } from "react";
+import Limited from "../pages/Limited/Limited";
 
 function App() {
   const [showNotification, setShowNotification] = useState(false);
@@ -21,9 +27,13 @@ function App() {
         }}
       >
         <Switch>
-          <Route path="/" exact component={Auth}></Route>
+          <Route path="/" exact>
+            <Auth />
+          </Route>
+          <Route>
+            <Limited />
+          </Route>
           {/* <Route path="/" exact component={Home}></Route> */}
-          <Redirect to="/" />
         </Switch>
       </NotificationContext.Provider>
     </Router>

@@ -1,5 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { register } from "../../../../api/authservice";
 
 const inputStyle =
   "w-72 text-sm block px-4 py-2 border border-gray-300 rounded pl-2 mb-2 outline-none";
@@ -17,7 +18,7 @@ function FormSigUp(props) {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    props.info(data);
+    // register the user
   };
 
   return (
