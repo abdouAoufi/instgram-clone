@@ -5,11 +5,11 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-// import Auth from "../pages/Auth/Auth";
+import Auth from "../pages/Auth/Auth";
 // import Home from "./containers/Home/Home";
 import NotificationContext from "../context/notification";
 import React, { useState } from "react";
-// import Limited from "../pages/Limited/Limited";
+import Limited from "../pages/Limited/Limited";
 
 function App() {
   const [showNotification, setShowNotification] = useState(false);
@@ -26,16 +26,16 @@ function App() {
           displayNotification: displayNotification,
         }}
       >
-        
-        {/* <Switch> */}
-          {/* <Route path="/" exact>
+      
+        <Switch>
+          <Route path="/" exact>
             <Auth />
           </Route>
           <Route>
             <Limited />
-          </Route> */}
+          </Route>
           {/* <Route path="/" exact component={Home}></Route> */}
-        {/* </Switch> */}
+        </Switch>
       </NotificationContext.Provider>
     </Router>
   );
