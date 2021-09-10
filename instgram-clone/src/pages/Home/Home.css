@@ -1,0 +1,9 @@
+.story-container{
+  scroll-margin: 2px;
+  scroll-padding: 1rem;
+  overflow-x: auto;
+}
+
+.story-container::-webkit-scrollbar{
+   display: none;
+}
