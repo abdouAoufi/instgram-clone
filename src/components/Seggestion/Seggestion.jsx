@@ -1,24 +1,19 @@
 import React, { useEffect } from "react";
 import ProfileHolder from "../ProfileHolder/ProfileHolder";
-import Footer from "../../containers/Auth/Auth/Footer";
+import Footer from "../../components/Footer/Footer";
 
 function Seggestion(props) {
-  useEffect(() => {});
   return (
     <div>
       <p className="font-bold text-sm text-gray-400 my-4  ">
         Suggestions For You
       </p>
       <div className="">
-        {props.data?.slice(0, 5).map((person) => (
-          <ProfileHolder
-            key={person.id}
-            name={person.firstName}
-            userName={person.userName}
-            image={person.smallImage}
-            sugest={true}
-          />
-        ))}
+        <ProfileHolder />
+        <ProfileHolder />
+        <ProfileHolder />
+        <ProfileHolder />
+        <ProfileHolder />
       </div>
       <div className="mx-2 mt-4">
         <Footer type={true} />

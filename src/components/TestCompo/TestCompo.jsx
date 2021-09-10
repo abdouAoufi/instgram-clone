@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { db, storage } from "../../firebase";
+import { db, storage } from "../../utils/firebase";
 import TailInput from "../Input/TailInput";
 import firebase from "firebase";
 import LoadinSm from "../Loading/LoadingSm";

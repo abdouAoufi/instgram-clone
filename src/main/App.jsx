@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Auth from "../pages/Auth/Auth";
-// import Home from "./containers/Home/Home";
+import Home from "../pages/Home/Home";
 import NotificationContext from "../context/notification";
 import React, { useState } from "react";
 import Limited from "../pages/Limited/Limited";
@@ -26,15 +26,16 @@ function App() {
           displayNotification: displayNotification,
         }}
       >
-      
         <Switch>
           <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="/auth" exact>
             <Auth />
           </Route>
           <Route>
             <Limited />
           </Route>
-          {/* <Route path="/" exact component={Home}></Route> */}
         </Switch>
       </NotificationContext.Provider>
     </Router>

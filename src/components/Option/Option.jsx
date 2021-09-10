@@ -56,7 +56,7 @@ function Option(props) {
           </svg>
           Switch account
         </li>
-        <li onClick={props.click} className="w-59 px-4 py-3 text-sm  flex items-center bg-blue-100 hover:bg-blue-200 cursor-pointer border-t ">
+        <li onClick={props.logout} className="w-59 px-4 py-3 text-sm  flex items-center bg-blue-100 hover:bg-blue-200 cursor-pointer border-t ">
           {" "}
           Log out
         </li>
