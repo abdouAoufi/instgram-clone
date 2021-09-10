@@ -84,7 +84,7 @@ function TestCompo({ user, fetchData }) {
     setImageName(e.target.files[0].name);
   };
   return (
-    <div className="w-full h-full border rounded p-4  grid items-center place-items-center min-w-59 min-h-59 ">
+    <div className="w-full bg-white h-full border rounded p-4  grid items-center place-items-center min-w-59 min-h-59 ">
       {loadingState ? (
         <LoadinSm />
       ) : (

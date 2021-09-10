@@ -4,17 +4,28 @@ import Option from "../../components/Option/Option";
 import StoryHolder from "../../components/StorieHolder/StoryHolder";
 import Loading from "../../components/Loading/Loading";
 import UploadBtn from "../../components/Button/TailUploadBtn";
-import Slide from "./Side/Side";
+import Post from "../../components/Post/Post";
 import Side from "./Side/Side";
+import Modal from "../../components/Modal/Modal";
+import Uploading from "../../components/Uploading/Uploading";
+import Window from "../../components/Window/Window";
 
 function Home() {
   const [openOption, setOpenOption] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
+  const [openModal, setOpenModal] = useState(true);
+
   const logout = () => {
     alert("Logout");
   };
   return (
     <div>
+      <Modal
+        content={<Uploading setOpen={() => setOpenModal(!openModal)} />}
+        open={openModal}
+        setOpen={() => setOpenModal(!openModal)}
+      />
+
       {openOption ? (
         <div
           className="border fixed z-50 block top-0 right-0 w-full h-full lg:px-32 "
@@ -48,7 +59,18 @@ function Home() {
                 {/* ))} */}
               </div>
             )}
+            <div>
+              <Post
+              /* likes={persone.totalLikes}
+              profileImg={persone.profilePic}
+              key={persone.id}
+              userName={persone.firstName}
+              imageUrl={persone.fullImage}
+              caption={persone.descreption} */
+              />
+            </div>
           </div>
+
           <div className="fixed z-100  bottom-4 w-auto lg:right-16 right-8   ">
             {" "}
             <div>

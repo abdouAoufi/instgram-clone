@@ -26,14 +26,12 @@ function CostumModalCont(props) {
   const classes = useStyles();
   const [modalStyle] = React.useState(getModalStyle);
   return (
-    <Modal open={props.open} onClose={() => props.setOpen(false)}>
-      <div
-        className={`${classes.paper}  outline-none border-0 rounded-xl lg:w-100 `}
-        style={modalStyle}
-      >
-        {props.children}
-      </div>
-    </Modal>
+    <div
+      className={`${classes.paper}  outline-none border-0 rounded-xl lg:w-100 `}
+      style={modalStyle}
+    >
+      {props.children}
+    </div>
   );
 }
 

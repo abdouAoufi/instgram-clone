@@ -28,28 +28,7 @@ function CostumModal(props) {
   const [modalStyle] = React.useState(getModalStyle);
   return (
     <Modal open={props.open} onClose={() => props.setOpen(false)}>
-      <div
-        className={`${classes.paper} w-65  min-h-59 outline-none border-0 rounded-xl lg:w-100 `}
-        style={modalStyle}
-      >
-        <div className="flex justify-between flex-col mx-auto h-full">
-          <div className="text-base font-semibold text-gray-500 text-center     border-b py-3">
-            {props.title}
-          </div>
-          <div className="text-base font-normal text-gray-600  px-4   py-6  ">
-            {" "}
-            {props.textInside}
-          </div>
-          <div className="text-sm   font-semibold text-blue-600 text-center py-3 border-t ">
-            <span
-              onClick={() => props.setOpen(false)}
-              className="cursor-pointer"
-            >
-              {props.btnText}
-            </span>
-          </div>
-        </div>
-      </div>
+      <div className="h-screen w-screen grid items-center place-content-center">{props.content}</div>
     </Modal>
   );
 }
