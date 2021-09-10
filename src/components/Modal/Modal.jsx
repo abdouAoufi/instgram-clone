@@ -28,7 +28,7 @@ function CostumModal(props) {
   const [modalStyle] = React.useState(getModalStyle);
   return (
     <Modal open={props.open} onClose={() => props.setOpen(false)}>
-      <div className="h-screen w-screen grid items-center place-content-center">{props.content}</div>
+      <div className="h-screen w-screen grid items-center place-content-center">{props.children}</div>
     </Modal>
   );
 }

@@ -19,7 +19,7 @@ function FormLogin(props) {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+     
     login(data.email, data.password)
       .then((user) => {
         console.log(user);
