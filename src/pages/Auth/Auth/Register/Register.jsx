@@ -1,13 +1,13 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { register as signup } from "../../../../api/authservice";
+import AuthOperation from "../../../../api/authservice";
 
 const inputStyle =
   "w-72 text-sm block px-4 py-2 border border-gray-300 rounded pl-2 mb-2 outline-none";
 const dangetText = "text-xs font-normal text-red-500 mb-2";
 const buttonStyle =
   "rounded text-white m-auto w-72 mb-4 py-1 px-4 text-base font-bold bg-blue-500";
-const { signUp, updateProfile } = signup();
+const { signUp, updateProfile } = AuthOperation();
  
 const emailReg =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -23,7 +23,7 @@ function FormSigUp(props) {
       .then((userCredential) => {
         console.log(userCredential);
         let user = userCredential.user;
-        return updateProfile(user, displayName);
+        return updateProfile(user, data.userName);
       })
       .then((response) => {
         console.log(response);
