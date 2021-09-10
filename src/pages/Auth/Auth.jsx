@@ -4,14 +4,12 @@ import Footer from "../../components/Footer/Footer";
 import Login from "./Auth/Login/Login";
 import Register from "./Auth/Register/Register";
 import Download from "../../components/Download/GetApp";
-import Alert from "../../components/Alerts/Alert";
 import NotificationContext from "../../context/notification";
 // import { auth } from "../../utils/firebase";
 
 function Auth(props) {
   const container_classes = "flex justify-around align-center w-72";
   const heading_classes = "mb-4 text-center text-sm font-bold text-gray-500";
-  const [notifTxt, setNotifTxt] = useState("Error something went wrong !");
   const [isLogin, setIsLogin] = useState(true);
   const [userSignIn, setUserSignIn] = useState(false);
   const notification = useContext(NotificationContext);
@@ -88,20 +86,17 @@ function Auth(props) {
     setIsLogin(!isLogin);
   };
 
-  const displayNotification = (text) => {
-    setNotifTxt(text);
-    notification.displayNotification();
-  };
+ 
   return (
     <div className={papaStyle}>
-      {notification.status ? <Alert text={notifTxt} /> : null}
+ 
       <div className={windowStyle}>
         <img src={assets.logoTypo} alt="logo" className="w-32 m-auto" />
         <p style={hideForLogin} className={headingStyle}>
           Sign up to see photos and videos <br /> from your fiends.
         </p>
         <button
-          onClick={displayNotification.bind(this, "This feature not aviable ")}
+           
           style={hideForLogin}
           className={buttonStyle}
         >
@@ -143,13 +138,13 @@ function Auth(props) {
         <p
           style={showForLogin}
           className={`${headingStyle} cursor-pointer hover:underline`}
-          onClick={displayNotification.bind(this, "This feature not aviable ")}
+          
         >
           Login with facebook
         </p>
 
         <p
-          onClick={displayNotification.bind(this, "This feature not aviable ")}
+       
           style={showForLogin}
           className=" mb-4 text-center font-normal text-sm w-3/4 text-gray-500 cursor-pointer hover:underline"
         >
