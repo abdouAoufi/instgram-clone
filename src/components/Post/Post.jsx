@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-
 
 const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
   const [like, setLike] = useState(false);
@@ -15,14 +12,11 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
     <div className=" h-auto bg-white  m-auto border border-gray-300 my-8 rounded mb-8">
       <div className=" flex justify-between items-center py-2 px-2  ">
         <div className="flex justify-between items-center">
-          <Avatar className="mr-3" src={profileImg} alt={userName} />
           <a href="/" className="font-semibold inline-block hover:underline">
             {userName}
           </a>
         </div>
-        <a href="/">
-          <MoreHorizIcon className="text-gray-400" />
-        </a>
+        <a href="/"></a>
       </div>
       <div className="p-0 m-0   min-h-59 ">
         <img

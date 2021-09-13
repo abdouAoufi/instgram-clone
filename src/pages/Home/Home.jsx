@@ -11,11 +11,11 @@ import { AuthContextProvider } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 import { createApi } from "unsplash-js";
 import Modal from "../../components/Modal/Modal";
-import Window from "../../components/Window/Window"
+import Window from "../../components/Window/Window";
 
 function Home() {
   const api = createApi({
-    accessKey: "XIMULt5ue5Ps6Tm7TkKY1YGan2Bj_4K4ybUCE4f3mOE",
+    accessKey: "XIMULt5ue5Ps6Tm7TkKY1YGan2Bj_4K4ybUCE4f3mOE"
   });
   const [openOption, setOpenOption] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
@@ -24,7 +24,7 @@ function Home() {
   const [dataWindow, setDataWindow] = useState({
     title: "Not authenticated!",
     content: "Sorry it looks like you're not connected, try to login!",
-    btntext: "Okey, thanks!",
+    btntext: "Okey, thanks!"
   });
   let history = useHistory();
 
@@ -33,7 +33,7 @@ function Home() {
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged(function (user) {
+    auth.onAuthStateChanged(function(user) {
       if (user) {
         console.log("Authenticated");
       } else {
@@ -48,11 +48,11 @@ function Home() {
     console.log("Loading data ......");
     db.collection("posts")
       .get()
-      .then((querySnapshot) => {
+      .then(querySnapshot => {
         console.log(querySnapshot);
         setLoadingData(false);
         let tempHolder = [];
-        querySnapshot.forEach((doc) => {
+        querySnapshot.forEach(doc => {
           tempHolder.push(doc.data());
         });
         setdbPost(tempHolder);
@@ -91,7 +91,7 @@ function Home() {
     <AuthContextProvider>
       <div>
         <Modal>
-          
+          <Window dataWindow={dataWindow} />
         </Modal>
         {openOption ? (
           <div
@@ -109,7 +109,7 @@ function Home() {
         <Navbar showOptioin={() => setOpenOption(!openOption)} />
         <main>
           <section
-            onClick={(e) => e.stopPropagation()}
+            onClick={e => e.stopPropagation()}
             className="block lg:flex lg:justify-between lg:px-32"
           >
             <div className="w-full lg:w-150 mt-20">
@@ -127,7 +127,7 @@ function Home() {
                 </div>
               )}
               <div>
-                {dbPost?.map((persone) => {
+                {dbPost?.map(persone => {
                   return (
                     <Post
                       likes={persone.totalLikes}

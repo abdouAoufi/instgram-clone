@@ -1,26 +1,21 @@
 import React from "react";
 import * as assets from "../../assets";
 import Avatar from "../Avatar/Avatar";
-import SearchIcon from "@material-ui/icons/Search";
 
-const Navbar = (props) => {
+const Navbar = props => {
   const mr = "mx-3";
   return (
     <div>
       <div className=" fixed top-0 z-50 mb-12 h-14 w-full overflow-hidden box-border px-4 flex justify-between items-center py-3 border border-gray-200 bg-white lg:px-32">
         <div className=" flex-1">
           <span onClick={props.refresh} className="cursor-pointer ">
-            <img src={assets.logoTypo} alt="logo"  className="w-24  h-auto"/>
+            <img src={assets.logoTypo} alt="logo" className="w-24  h-auto" />
           </span>
         </div>
         <div className="hidden lg:flex-1 lg:block">
           <div
             className={`justify-between text-sm py-1 flex p-0.5 items-center border overflow-hidden w-59 border border-gray-200 rounded `}
           >
-            <SearchIcon
-              style={{ fontSize: 17, cursor: "pointer" , marginRight : 4 , marginLeft : 4}}
-              color="disabled"
-            />
             <input
               type="text"
               placeholder="Search"
@@ -29,7 +24,10 @@ const Navbar = (props) => {
           </div>
         </div>
         <div className="flex items-center relative  ">
-          <div onClick={props.refresh} className={`${mr} hidden lg:block cursor-pointer`}>
+          <div
+            onClick={props.refresh}
+            className={`${mr} hidden lg:block cursor-pointer`}
+          >
             <svg
               aria-label="Home"
               fill="#262626"
@@ -95,7 +93,11 @@ const Navbar = (props) => {
             </svg>
           </div>
 
-          <div onClick={props.showOptioin} className={`${mr}  cursor-pointer `} href="/profile">
+          <div
+            onClick={props.showOptioin}
+            className={`${mr}  cursor-pointer `}
+            href="/profile"
+          >
             <Avatar type={"small"} imgUrl={null} />
           </div>
         </div>
