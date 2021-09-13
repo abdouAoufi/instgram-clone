@@ -6,7 +6,7 @@ function Modal(props) {
     ? "fixed inset-0 z-50 overflow-hidden  top-56 flex items-start mb-4 justify-center transform px-4 sm:px-6"
     : " fixed inset-0 z-50 overflow-hidden  top-14 flex items-start mb-4 justify-center transform px-4 sm:px-6";
   return (
-    <div className="" onClick={props.click}>
+    <div className="">
       <Transition
         className="fixed z-50 inset-0 bg-black bg-opacity-70 z-100 transition-opacity"
         show={props.openModal}

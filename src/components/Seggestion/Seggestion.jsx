@@ -5,19 +5,19 @@ import Footer from "../../components/Footer/Footer";
 function Seggestion(props) {
   const listProfile = [];
   props.listProfile.forEach((p, i) => {
-    if (i <= 4) listProfile.push(p);
+    if (i >= 4 && i <= 8) listProfile.push(p);
   });
-  console.log(listProfile);
+
   return (
     <div>
       <p className="font-bold text-sm text-gray-400 my-4  ">
         Suggestions For You
       </p>
       <div className="">
-        {listProfile.map(profile => {
-          console.log(profile.profilePic);
+        {listProfile?.map((profile, i) => {
           return (
             <ProfileHolder
+              key={i}
               sugest
               firstName={profile.firstName}
               imageUrl={profile.profilePic}

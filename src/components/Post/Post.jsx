@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ProfilePicture from "../ProfilePicture/ProfilePic";
 
 const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
   const [like, setLike] = useState(false);
@@ -12,7 +13,11 @@ const Post = ({ likes, profileImg, userName, imageUrl, caption }) => {
     <div className=" h-auto bg-white  m-auto border border-gray-300 my-8 rounded mb-8">
       <div className=" flex justify-between items-center py-2 px-2  ">
         <div className="flex justify-between items-center">
-          <a href="/" className="font-semibold inline-block hover:underline">
+          <ProfilePicture size="medium" />
+          <a
+            href="/"
+            className="ml-3 font-semibold inline-block hover:underline"
+          >
             {userName}
           </a>
         </div>

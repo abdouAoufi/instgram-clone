@@ -1,7 +1,11 @@
 import React from "react";
 import ProfilePic from "../ProfilePicture/ProfilePic";
+import { auth } from "../../utils/firebase";
 
 function ProfileHolder(props) {
+  const logout = () => {
+    auth.signOut().then(() => alert("Sign out"));
+  };
   return (
     <div className="flex justify-between   w-72 mx-auto mb-2 items-center py-1">
       <div className="flex items-center">
@@ -13,7 +17,9 @@ function ProfileHolder(props) {
           {props.sugest ? (
             <p className="font-semibold text-sm">{props.firstName}</p>
           ) : (
-            <p className="font-semibold text-sm">user name</p>
+            <p className="font-semibold text-sm">
+              {props.userName || "loading"}
+            </p>
           )}
 
           <p className="text-gray-400 font-normal text-sm">Suggested for you</p>
@@ -27,7 +33,7 @@ function ProfileHolder(props) {
           </p>
         ) : (
           <p
-            onClick={props.logOut}
+            onClick={logout}
             className="font-bold text-sm text-blue-600 cursor-pointer "
           >
             log out

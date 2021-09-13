@@ -10,7 +10,7 @@ function TestCompo({ user, fetchData }) {
   const [imageName, setImageName] = useState(0);
   const [loadingState, setLoadingState] = useState(false);
 
-  const postDataToServer = (url) => {
+  const postDataToServer = url => {
     let tempData = {
       id: new Date().getTime(),
       descreption: caption,
@@ -22,16 +22,16 @@ function TestCompo({ user, fetchData }) {
       profilePic: "not data for now",
       username: user.displayName,
       totalLikes: 0,
-      comments: {},
+      comments: {}
     };
     db.collection("posts")
       .add(tempData)
-      .then((docRef) => {
+      .then(docRef => {
         console.log("Document written with ID: ", docRef.id);
         setLoadingState(false);
         fetchData();
       })
-      .catch((error) => {
+      .catch(error => {
         console.error("Error adding document: ", error);
       });
   };
@@ -41,7 +41,7 @@ function TestCompo({ user, fetchData }) {
     const uploadTask = storage.ref(`images/${image.name}`).put(image);
     uploadTask.on(
       "state_changed",
-      (snapshot) => {
+      snapshot => {
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log(progress);
         switch (snapshot.state) {
@@ -62,35 +62,36 @@ function TestCompo({ user, fetchData }) {
             console.log("Default behavior");
         }
       },
-      (error) => {},
+      error => {
+        console.log(error);
+      },
       () => {
-        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log("File available at", downloadURL);
+        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
           postDataToServer(downloadURL);
         });
       }
     );
   };
 
-  const changeHandler = (e) => {
+  const changeHandler = e => {
     setCaption(e.target.value);
   };
   const doneHandler = () => {
     handleUpload();
   };
 
-  const fileChangeHandler = (e) => {
+  const fileChangeHandler = e => {
     setImage(e.target.files[0]);
     setImageName(e.target.files[0].name);
   };
   return (
-    <div className="w-full bg-white h-full border rounded p-4  grid items-center place-items-center min-w-59 min-h-59 ">
+    <div className="mt-16 w-4/6 lg:w-1/3 bg-white h-1/2  border rounded p-4  grid items-center place-items-center min-w-59 min-h-59 ">
       {loadingState ? (
         <LoadinSm />
       ) : (
         <div className=" relative flex justify-between flex-col mx-auto h-full">
           <div className="text-base font-semibold text-gray-500 text-center mb-1    border-b py-3">
-            Uploading images
+            Creating a post
           </div>
           <TailInput change={changeHandler} />
           <div className="relative w-64 mt-4 mb-4">

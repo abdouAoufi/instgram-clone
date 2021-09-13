@@ -2,7 +2,10 @@ import React from "react";
 
 function Window(props) {
   return (
-    <div className="w-screen h-screen grid items-center place-items-center ">
+    <div
+      onClick={e => e.stopPropagation()}
+      className="w-screen h-screen grid items-center place-items-center "
+    >
       <div
         className={`bg-white z-100 w-65  min-h-59 outline-none border-0 rounded-xl lg:w-100 `}
       >
