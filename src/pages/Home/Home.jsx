@@ -10,6 +10,8 @@ import { auth, db } from "../../utils/firebase";
 import { AuthContextProvider } from "../../context/auth";
 import { useHistory } from "react-router-dom";
 import { createApi } from "unsplash-js";
+import Modal from "../../components/Modal/Modal";
+import Window from "../../components/Window/Window"
 
 function Home() {
   const api = createApi({
@@ -88,6 +90,9 @@ function Home() {
   return (
     <AuthContextProvider>
       <div>
+        <Modal>
+          
+        </Modal>
         {openOption ? (
           <div
             className="border fixed z-50 block top-0 right-0 w-full h-full lg:px-32 "
