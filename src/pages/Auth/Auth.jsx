@@ -11,8 +11,6 @@ function Auth(props) {
   const container_classes = "flex justify-around align-center w-72";
   const heading_classes = "mb-4 text-center text-sm font-bold text-gray-500";
   const [isLogin, setIsLogin] = useState(true);
-  const [userSignIn, setUserSignIn] = useState(false);
-  const notification = useContext(NotificationContext);
   const hideForLogin = { display: isLogin ? "none" : "block" };
   const showForLogin = { display: isLogin ? "block" : "none" };
   const headingStyle = "mb-4 text-center text-sm font-bold text-gray-500";
@@ -21,85 +19,18 @@ function Auth(props) {
   const windowStyle =
     "bg-white lg:border lg:border-gray-300 rounded shadow  w-full  md:w-8/12 mx-2  md:mt-4 mb-2  py-4 flex flex-col justify-center place-items-center lg:w-96";
   const papaStyle = " flex flex-col justify-center place-items-center";
-
-  // useEffect(() => {
-  //   auth.onAuthStateChanged(function (user) {
-  //     if (user) {
-  //       displayNotification("User already logged in !");
-  //       setTimeout(() => {
-  //         props.history.replace("/");
-  //       }, 1000);
-  //     } else {
-        // setUserSignIn(true); // that means the user is signin
-  //     }
-  //   });
-  // }, [userSignIn]);
-
-  // const showinfo = ({ email, password, fullName }) => {
-  //   if (isLogin) {
-  //     signIn(email, password);
-  //   } else {
-  //     signUp(email, password, fullName);
-  //   }
-  // };
-
-  // const signIn = (email, passwod) => {
-  //   auth
-  //     .signInWithEmailAndPassword(email, passwod)
-  //     .then((userCredential) => {
-  //       // Signed in
-  //       let user = userCredential.user;
-  //       setUserSignIn(true);
-  //       // ...
-  //     })
-  //     .catch((error) => {
-  //       let errorMessage = error.message;
-  //       displayNotification(errorMessage);
-  //     });
-  // };
-
-  // const signUp = (email, password, displayName) => {
-  //   auth
-  //     .createUserWithEmailAndPassword(email, password)
-  //     .then((userCredential) => {
-  //       let user = userCredential.user;
-  //       updateProfile(user, displayName);
-  //     })
-  //     .catch((error) => {
-  //       let errorMessage = error.message;
-  //       displayNotification(errorMessage);
-  //     });
-  // };
-
-  // const updateProfile = (user, userName) => {
-  //   user
-  //     .updateProfile({ displayName: userName })
-  //     .then((response) => {
-  //       setUserSignIn(true);
-  //     })
-  //     .catch((error) => {
-  //       alert("failed");
-  //     });
-  // };
-
   const switchBetweenTask = () => {
     setIsLogin(!isLogin);
   };
 
- 
   return (
     <div className={papaStyle}>
- 
       <div className={windowStyle}>
         <img src={assets.logoTypo} alt="logo" className="w-32 m-auto" />
         <p style={hideForLogin} className={headingStyle}>
           Sign up to see photos and videos <br /> from your fiends.
         </p>
-        <button
-           
-          style={hideForLogin}
-          className={buttonStyle}
-        >
+        <button style={hideForLogin} className={buttonStyle}>
           Log in with Facebook
         </button>
         {!isLogin ? (
@@ -138,13 +69,11 @@ function Auth(props) {
         <p
           style={showForLogin}
           className={`${headingStyle} cursor-pointer hover:underline`}
-          
         >
           Login with facebook
         </p>
 
         <p
-       
           style={showForLogin}
           className=" mb-4 text-center font-normal text-sm w-3/4 text-gray-500 cursor-pointer hover:underline"
         >

@@ -6,13 +6,15 @@ import Loading from "../../components/Loading/Loading";
 import UploadBtn from "../../components/Button/TailUploadBtn";
 import Post from "../../components/Post/Post";
 import Side from "./Side/Side";
-import Uploading from "../../components/Uploading/Uploading";
-import Window from "../../components/Window/Window";
 import { auth, db } from "../../utils/firebase";
 import { AuthContextProvider } from "../../context/auth";
 import { useHistory } from "react-router-dom";
+import { createApi } from "unsplash-js";
 
 function Home() {
+  const api = createApi({
+    accessKey: "XIMULt5ue5Ps6Tm7TkKY1YGan2Bj_4K4ybUCE4f3mOE",
+  });
   const [openOption, setOpenOption] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
   const [openModal, setOpenModal] = useState(false);
@@ -31,7 +33,6 @@ function Home() {
   useEffect(() => {
     auth.onAuthStateChanged(function (user) {
       if (user) {
-        console.log(user);
         console.log("Authenticated");
       } else {
         history.push("/auth");
@@ -39,12 +40,14 @@ function Home() {
     });
   }, []);
 
-  useEffect(() => {
+  useEffect(() => fetchData(), []);
+
+  const fetchData = () => {
+    console.log("Loading data ......");
     db.collection("posts")
-      .limit(10)
-      .orderBy("createAt", "desc")
       .get()
       .then((querySnapshot) => {
+        console.log(querySnapshot);
         setLoadingData(false);
         let tempHolder = [];
         querySnapshot.forEach((doc) => {
@@ -52,8 +55,31 @@ function Home() {
         });
         setdbPost(tempHolder);
       });
-  }, []);
-
+  };
+  // const getUnsplashData = () => {
+  //   api.search
+  //     .getPhotos({ query: "cars", orientation: "landscape" })
+  //     .then((result) => {
+  //       const dataRetrived = result.response.results;
+  //       let finalData = [...dbPost];
+  //       dataRetrived.forEach((singleImage) => {
+  //         finalData.push({
+  //           id: singleImage.id,
+  //           descreption: singleImage.alt_description,
+  //           createAt: singleImage.created_at,
+  //           fullImage: singleImage.urls.regular,
+  //           smallImage: singleImage.urls.small,
+  //           userName: singleImage.user.instagram_username,
+  //           firstName: singleImage.user.first_name,
+  //           lastName: singleImage.user.last_name,
+  //           profilePic: singleImage.user.profile_image.large,
+  //           totalLikes: singleImage.user.total_likes,
+  //           comments: {},
+  //         });
+  //       });
+  //     })
+  //     .catch(() => {});
+  // };
   const closeModal = () => {
     setOpenModal(!openModal);
     console.log(openModal);
@@ -97,7 +123,6 @@ function Home() {
               )}
               <div>
                 {dbPost?.map((persone) => {
-                  console.log(persone);
                   return (
                     <Post
                       likes={persone.totalLikes}

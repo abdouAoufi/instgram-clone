@@ -1,6 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import AuthOperation from "../../../../api/authservice";
+import { useHistory } from "react-router-dom";
 
 const emailReg =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -12,6 +13,7 @@ const buttonStyle =
   "rounded text-white m-auto w-72 mb-4 py-1 px-4 text-base font-bold bg-blue-500";
 
 function FormLogin(props) {
+  let history = useHistory();
   const { login } = AuthOperation();
   const {
     register,
@@ -19,10 +21,9 @@ function FormLogin(props) {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-     
     login(data.email, data.password)
       .then((user) => {
-        console.log(user);
+        history.replace("/");
       })
       .catch((err) => {
         console.log(err);
