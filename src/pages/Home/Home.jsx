@@ -21,6 +21,7 @@ function Home() {
   const [loadingData, setLoadingData] = useState(true);
   const [openModal, setOpenModal] = useState(false);
   const [dbPost, setdbPost] = useState([]);
+  const [storyList, setStoryList] = useState([]);
   const [dataWindow, setDataWindow] = useState({
     title: "Not authenticated!",
     content: "Sorry it looks like you're not connected, try to login!",
@@ -34,10 +35,12 @@ function Home() {
 
   useEffect(() => {
     auth.onAuthStateChanged(function(user) {
-      if (user) {
+      if (!user) {
         console.log("Authenticated");
-      } else {
-        history.push("/auth");
+        setOpenModal(true);
+        setTimeout(() => {
+          history.push("/auth");
+        }, 2000);
       }
     });
   }, []);
@@ -56,41 +59,35 @@ function Home() {
           tempHolder.push(doc.data());
         });
         setdbPost(tempHolder);
+        setTimeout(getUnsplashData, 2000);
       });
   };
-  // const getUnsplashData = () => {
-  //   api.search
-  //     .getPhotos({ query: "cars", orientation: "landscape" })
-  //     .then((result) => {
-  //       const dataRetrived = result.response.results;
-  //       let finalData = [...dbPost];
-  //       dataRetrived.forEach((singleImage) => {
-  //         finalData.push({
-  //           id: singleImage.id,
-  //           descreption: singleImage.alt_description,
-  //           createAt: singleImage.created_at,
-  //           fullImage: singleImage.urls.regular,
-  //           smallImage: singleImage.urls.small,
-  //           userName: singleImage.user.instagram_username,
-  //           firstName: singleImage.user.first_name,
-  //           lastName: singleImage.user.last_name,
-  //           profilePic: singleImage.user.profile_image.large,
-  //           totalLikes: singleImage.user.total_likes,
-  //           comments: {},
-  //         });
-  //       });
-  //     })
-  //     .catch(() => {});
-  // };
+
+  const getUnsplashData = () => {
+    api.search
+      .getPhotos({ query: "cars", orientation: "landscape" })
+      .then(result => {
+        const dataRetrived = result.response.results;
+        let storyList = [];
+        dataRetrived.forEach(singleImage => {
+          storyList.push({
+            firstName: singleImage.user.first_name,
+            profilePic: singleImage.user.profile_image.large
+          });
+        });
+        setStoryList(storyList);
+      })
+      .catch(() => {});
+  };
+
   const closeModal = () => {
     setOpenModal(!openModal);
-    console.log(openModal);
   };
 
   return (
     <AuthContextProvider>
       <div>
-        <Modal>
+        <Modal openModal={openModal}>
           <Window dataWindow={dataWindow} />
         </Modal>
         {openOption ? (
@@ -112,18 +109,18 @@ function Home() {
             onClick={e => e.stopPropagation()}
             className="block lg:flex lg:justify-between lg:px-32"
           >
-            <div className="w-full lg:w-150 mt-20">
+            <div className="w-full lg:w-150 overflow-hidden mt-20">
               {loadingData ? (
                 <Loading />
               ) : (
-                <div className=" w-full flex  py-4 px-2 flex-nowrap mt-1 mb-1   border rounded bg-white story-container ">
-                  {/* {unsplashData?.map((persone) => ( */}
-                  <StoryHolder
-                    key={"persone.id"}
-                    name={"persone.firstName"}
-                    image={"persone.profilePic"}
-                  />
-                  {/* ))} */}
+                <div className=" w-full flex   py-4 px-2 flex-nowrap mt-1 mb-1   border rounded bg-white story-container ">
+                  {storyList?.map(persone => (
+                    <StoryHolder
+                      key={persone.firstName}
+                      name={persone.firstName}
+                      image={persone.profilePic}
+                    />
+                  ))}
                 </div>
               )}
               <div>
@@ -149,7 +146,7 @@ function Home() {
               </div>
             </div>
             <div>
-              <Side />
+              {storyList.length > 0 ? <Side sideProfile={storyList} /> : ""}
             </div>
           </section>
         </main>

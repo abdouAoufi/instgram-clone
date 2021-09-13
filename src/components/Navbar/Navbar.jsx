@@ -12,10 +12,16 @@ const Navbar = props => {
             <img src={assets.logoTypo} alt="logo" className="w-24  h-auto" />
           </span>
         </div>
-        <div className="hidden lg:flex-1 lg:block">
+        <div className="hidden lg:flex-1  items-center lg:block">
           <div
             className={`justify-between text-sm py-1 flex p-0.5 items-center border overflow-hidden w-59 border border-gray-200 rounded `}
           >
+            <img
+              src={assets.search}
+              width="20"
+              height="20"
+              className="mx-1  p-0.5"
+            />
             <input
               type="text"
               placeholder="Search"

@@ -12,7 +12,7 @@ function ProfilePic(props) {
       <div className={size}>
         <img
           className="rounded-full shadow-sm"
-          src="https://randomuser.me/api/portraits/women/81.jpg"
+          src={props.url}
           alt="user image"
         />
       </div>
